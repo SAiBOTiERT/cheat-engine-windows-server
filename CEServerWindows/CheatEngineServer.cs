@@ -124,6 +124,7 @@ namespace CEServerWindows
             this.RegisterCommandHandler(new VirtualQueryExFullCommand());
             this.RegisterCommandHandler(new ReadProcessMemoryCommand());
             this.RegisterCommandHandler(new GetSymbolsFromFileCommand());
+            this.RegisterCommandHandler(new GetRegionInfoCommand());
         }
 
         public void RegisterCommandHandler(ICheatEngineCommand command)

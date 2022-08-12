@@ -20,7 +20,6 @@ Even though the official cheat engine server 'ports' a few of Windows API calls 
 * **Debugging**: No debugging features are implemented, this might be able to be ported.
 * **Compression**: The current implementation of the command **ReadProcessMemory** does not implement compression, this is disabled by default in Cheat Engine (Network >> Compression)
 * **Thread Handling**: It is not possible, currently, to suspend resume, get or set the thread context
-* **CMD_GETREGIONINFO**: Not sure how to implement this in Windows
 * **Debug symbols**: Symbols are not loaded as we believe that cheat engine expects debug symbols for elf binaries
 * **Speed hack**: Not implemented
 * **Alloc/Free**: Not implemented

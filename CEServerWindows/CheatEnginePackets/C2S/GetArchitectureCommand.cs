@@ -23,7 +23,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S
         public override GetArchitectureResponse Process()
         {
             //https://github.com/cheat-engine/cheat-engine/blob/master/Cheat%20Engine/ceserver/ceserver.c#L137-L153
-            return new GetArchitectureResponse(Architecture.i386);
+            return new GetArchitectureResponse(Architecture.x86_64);
         }
     }
 }

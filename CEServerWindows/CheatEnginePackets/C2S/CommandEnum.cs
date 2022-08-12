@@ -41,6 +41,7 @@ namespace CEServerWindows
         CMD_SPEEDHACK_SETSPEED = 30,
         CMD_VIRTUALQUERYEXFULL = 31,
         CMD_GETREGIONINFO = 32,
+        CMD_AOBSCAN = 200,
         CMD_COMMANDLIST2 = 255
     }
 

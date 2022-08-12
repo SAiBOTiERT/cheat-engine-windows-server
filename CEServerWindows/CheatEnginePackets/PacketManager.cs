@@ -44,6 +44,7 @@ namespace CEServerWindows.CheatEnginePackets
                 Console.WriteLine(type);
                 throw new MissingCommandHandlerException();
             }
+            //Console.WriteLine(type);
             command = (ICheatEngineCommand)Activator.CreateInstance(command.GetType()); 
             command.Initialize(reader);
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29009.5
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEServerWindows", "CEServerWindows\CEServerWindows.csproj", "{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}"
 EndProject
@@ -9,18 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CEServerApplication", "CESe
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Debug|x64.ActiveCfg = Debug|x64
+		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Debug|x64.Build.0 = Debug|x64
+		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Release|x64.ActiveCfg = Release|x64
+		{2F8B4A87-C3ED-4C99-8C1F-4244FBDB7438}.Release|x64.Build.0 = Release|x64
+		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Debug|x64.ActiveCfg = Debug|x64
+		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Debug|x64.Build.0 = Debug|x64
+		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Release|x64.ActiveCfg = Release|x64
+		{D19B06FC-6259-4069-BCDC-542D89DF9190}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

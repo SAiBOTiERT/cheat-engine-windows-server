@@ -27,7 +27,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C
             {//Yes this is reversed from VirtualQueryEx....
                 br.Write((long)region.BaseAddress);
                 br.Write((long)region.RegionSize);
-                br.Write((int)region.AllocationProtect); // Or Protect
+                br.Write((int)region.Protect); // Or Protect
                 br.Write((int)region.Type);
             }
 

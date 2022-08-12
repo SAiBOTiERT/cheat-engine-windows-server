@@ -30,7 +30,15 @@ namespace CEServerWindows.CheatEnginePackets.C2S
 
         public override CloseHandleResponse Process()
         {
-           return new CloseHandleResponse(WindowsAPI.ToolHelp.CloseHandle(this.Handle));
+            try
+            {
+                return new CloseHandleResponse(WindowsAPI.ToolHelp.CloseHandle(this.Handle));
+            }
+            catch (Exception ex)
+            {
+                return new CloseHandleResponse(true);
+            }
+
         }
     }
 }

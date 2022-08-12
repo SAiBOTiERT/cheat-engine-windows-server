@@ -6,12 +6,12 @@ using System.Text;
 
 namespace CEServerWindows.CheatEnginePackets.S2C
 {
-    public class VirtualQueryExResponse : ICheatEngineResponse 
+    public class GetRegionInfoResponse : ICheatEngineResponse 
     {
         public int Result;
         public WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION MemoryBasicInformation;
         
-        public VirtualQueryExResponse(int result, WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION mbi)
+        public GetRegionInfoResponse(int result, WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION mbi)
         {
             this.Result = result;
             this.MemoryBasicInformation = mbi;
@@ -33,6 +33,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C
             br.Write((int)MemoryBasicInformation.Type);
             br.Write((Int64)MemoryBasicInformation.BaseAddress);
             br.Write((Int64)MemoryBasicInformation.RegionSize);
+            br.Write((Byte)0);
 
             br.Close();
             return ms.ToArray();
