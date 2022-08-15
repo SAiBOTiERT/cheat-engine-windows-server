@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CEServerWindows</RootNamespace>
     <AssemblyName>CEServerWindows</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
@@ -37,8 +37,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -46,7 +47,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
@@ -59,39 +60,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheatEnginePackets\C2S\CloseHandleCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\CreateToolHelp32SnapshotCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\GetRegionInfoCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\Module32FirstCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\Module32NextCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\OpenProcessCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\ReadProcessMemoryCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\VirtualQueryExCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\VirtualQueryExFullCommand.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\CloseHandleResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\GetArchitectureResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\GetRegionInfoResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\GetSymbolsFromFileResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\GetVersionResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\HandleResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\ICheatEngineResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\Module32Response.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\Process32Response.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\ReadProcessMemoryResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\VirtualQueryExFullResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\VirtualQueryExResponse.cs" />
+    <Compile Include="Mode.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\CloseHandleCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\CreateToolHelp32SnapshotCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\GetArchitectureCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\GetSymbolsFromFileCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\GetVersionCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\Process32FirstCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\Process32NextCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\CloseHandleCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\CreateToolHelp32SnapshotCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\CheatEngineCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\Exceptions\CommandNotInitializedException.cs" />
-    <Compile Include="CheatEnginePackets\C2S\GetSymbolsFromFileCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\GetArchitectureCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\GetVersionCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\GetSymbolsFromFileCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\GetArchitectureCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\GetVersionCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\ICheatEngineCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\Module32FirstCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\Module32NextCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\OpenProcessCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\Process32FirstCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\Process32NextCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\Module32FirstCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\Module32NextCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\OpenProcessCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\Process32FirstCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\Process32NextCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\CommandEnum.cs" />
     <Compile Include="CheatEnginePackets\Architecture.cs" />
-    <Compile Include="CheatEnginePackets\C2S\ReadProcessMemoryCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\GetRegionInfoCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\VirtualQueryExFullCommand.cs" />
-    <Compile Include="CheatEnginePackets\C2S\VirtualQueryExCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\ReadProcessMemoryCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\GetRegionInfoCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\VirtualQueryExFullCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\VirtualQueryExCommand.cs" />
     <Compile Include="CheatEnginePackets\PacketManager.cs" />
-    <Compile Include="CheatEnginePackets\S2C\CloseHandleResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\GetArchitectureResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\GetSymbolsFromFileResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\HandleResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\GetVersionResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\ICheatEngineResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\Module32Response.cs" />
-    <Compile Include="CheatEnginePackets\S2C\Process32Response.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\CloseHandleResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\GetArchitectureResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\GetSymbolsFromFileResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\HandleResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\GetVersionResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\Module32Response.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\Process32Response.cs" />
     <Compile Include="CheatEnginePackets\MissingCommandHandlerException.cs" />
-    <Compile Include="CheatEnginePackets\S2C\ReadProcessMemoryResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\VirtualQueryExFullResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\GetRegionInfoResponse.cs" />
-    <Compile Include="CheatEnginePackets\S2C\VirtualQueryExResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\ReadProcessMemoryResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\VirtualQueryExFullResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\GetRegionInfoResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\VirtualQueryExResponse.cs" />
+    <Compile Include="FPGA.cs" />
+    <Compile Include="vmmsharp\vmmsharp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CheatEngineServer.cs" />
@@ -113,6 +142,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,7 @@
-﻿
-namespace CEServerWindows
+﻿namespace CEServerWindows
 {
     class Program
     {
-
 
         /// <param name="args">Command line arguments</param>
         static void Main(string[] args)
@@ -12,7 +10,6 @@ namespace CEServerWindows
 
             //server.Start();
             server.StartAsync().Wait();
-
         }
     }
    
