@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using CEServerWindows.WindowsAPI;
 using vmmsharp;
 
@@ -13,6 +14,7 @@ namespace CEServerWindows
         private List<Vmm.PROCESS_INFORMATION> processes = new ();
         private List<Vmm.MAP_MODULEENTRY> modules = new ();
         private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> vads = new ();
+        private Dictionary<UInt64, String> vadImages = new ();
 
         public FPGA()
         {
@@ -63,11 +65,21 @@ namespace CEServerWindows
             return proc;
         }
 
-        private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> addFreeVads(Vmm.MAP_VADENTRY[] vads)
+        public String? getImageByMBI(MemoryAPI.MEMORY_BASIC_INFORMATION mbi)
+        {
+            if (mbi.Type == MemoryAPI.TypeEnum.MEM_IMAGE && vadImages.ContainsKey((UInt64)mbi.BaseAddress))
+            {
+                return vadImages[(UInt64)mbi.BaseAddress];
+            }
+            return null;
+        }
+
+        private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> transformVadsToMBIS(Vmm.MAP_VADENTRY[] vads)
         {
             var sortedList = vads.OrderBy(x => x.vaStart).ToList();
             var full = new Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION>();
             UInt64 ptr = 0;
+            vadImages.Clear();
             while (sortedList.Any())
             {
                 var nextVad = sortedList.ElementAt(0);
@@ -81,6 +93,10 @@ namespace CEServerWindows
                     curr.Type = getWin32Type(nextVad);
                     curr.State = 0;
                     full.Add(ptr, curr);
+                    if (curr.Type == MemoryAPI.TypeEnum.MEM_IMAGE)
+                    {
+                        vadImages.Add(ptr, nextVad.wszText);
+                    }
                     ptr += (UInt64)nextVad.cbSize;
                 }
                 else
@@ -101,7 +117,7 @@ namespace CEServerWindows
         {
             if (!vads.Any() || !cached)
             {
-                vads = addFreeVads(vmm.Map_GetVad(pid));
+                vads = transformVadsToMBIS(vmm.Map_GetVad(pid));
             }
             return vads;
         }
