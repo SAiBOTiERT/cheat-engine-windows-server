@@ -12,16 +12,19 @@ namespace CEServerWindows
     public class CheatEngineServer : IDisposable
     {
         private TcpListener _tcpListener;
-        private PacketManager packetManager;
+        private PacketManager _packetManager;
         private CancellationTokenSource _tokenSource;
 #pragma warning disable CS0414
         private bool _listening;
 #pragma warning restore CS0414
         private CancellationToken _token;
         private Mode _mode = Mode.FPGA;
+        public bool enableWPM = false;
+        public static CheatEngineServer instance;
 
         public CheatEngineServer(ushort port = 52736) : this(port, new PacketManager())
         {
+            instance = this;
             if (_mode == Mode.FPGA)
             {
                 new FPGA();
@@ -37,7 +40,7 @@ namespace CEServerWindows
         public CheatEngineServer(ushort port, PacketManager pm)
         {
             _tcpListener = new TcpListener(IPAddress.Any, port);
-            this.packetManager = pm;
+            this._packetManager = pm;
         }
 
         private void HandleReceivedClient(TcpClient client)
@@ -49,12 +52,11 @@ namespace CEServerWindows
             {
                 try
                 {
-                    var command = this.packetManager.ReadNextCommand(reader);
-                    var output = this.packetManager.ProcessAndGetBytes(command);
+                    var command = this._packetManager.ReadNextCommand(reader);
+                    var output = this._packetManager.ProcessAndGetBytes(command);
 
                     //Console.WriteLine($"{command.CommandType}");
-
-
+                    
                     /* if(command.CommandType != CommandType.CMD_READPROCESSMEMORY)
                          Console.WriteLine(BitConverter.ToString(output).Replace("-", ""));*/
                    // Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
@@ -133,6 +135,7 @@ namespace CEServerWindows
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.ReadProcessMemoryCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetSymbolsFromFileCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetRegionInfoCommand());
+                if(enableWPM) this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.WriteProcessMemoryCommand());
             }
             else if(_mode == Mode.x64)
             {
@@ -150,12 +153,13 @@ namespace CEServerWindows
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.ReadProcessMemoryCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.GetSymbolsFromFileCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.GetRegionInfoCommand());
+                if(enableWPM) this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.WriteProcessMemoryCommand());
             }
         }
 
         public void RegisterCommandHandler(ICheatEngineCommand command)
         {
-            this.packetManager.RegisterCommand(command);
+            this._packetManager.RegisterCommand(command);
         }
 
     }

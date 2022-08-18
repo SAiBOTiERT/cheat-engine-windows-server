@@ -27,10 +27,16 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 
         public override HandleResponse Process()
         {
+
+            var flags = WindowsAPI.ToolHelp.ProcessAccessFlags.VirtualMemoryRead | WindowsAPI.ToolHelp.ProcessAccessFlags.QueryInformation;
+
+            if (CheatEngineServer.instance.enableWPM)
+            {
+                flags |= WindowsAPI.ToolHelp.ProcessAccessFlags.VirtualMemoryWrite;
+            }
+
             IntPtr handle = WindowsAPI.ToolHelp.OpenProcess(
-                WindowsAPI.ToolHelp.ProcessAccessFlags.VirtualMemoryRead |
-                WindowsAPI.ToolHelp.ProcessAccessFlags.VirtualMemoryWrite |
-                WindowsAPI.ToolHelp.ProcessAccessFlags.QueryInformation, 
+                flags, 
                 false, this.ProcessID);
 
             return new HandleResponse(handle);

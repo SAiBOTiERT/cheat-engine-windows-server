@@ -10,66 +10,66 @@ namespace CEServerWindows
     public class FPGA
     {
         public static FPGA instance;
-        private Vmm vmm;
-        private List<Vmm.PROCESS_INFORMATION> processes = new ();
-        private List<Vmm.MAP_MODULEENTRY> modules = new ();
-        private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> vads = new ();
-        private Dictionary<UInt64, String> vadImages = new ();
+        private Vmm _vmm;
+        private List<Vmm.PROCESS_INFORMATION> _processes = new ();
+        private List<Vmm.MAP_MODULEENTRY> _modules = new ();
+        private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> _vads = new ();
+        private Dictionary<UInt64, String> _vadImages = new ();
 
         public FPGA()
         {
             instance = this;
-            vmm = new Vmm("-printf", "-v", "-device", "fpga");
+            _vmm = new Vmm("-printf", "-v", "-device", "fpga");
         }
 
         public void dumpProcesses()
         {
-            processes.Clear();
-            foreach (var pid in vmm.PidList())
+            _processes.Clear();
+            foreach (var pid in _vmm.PidList())
             {
-                var proc = vmm.ProcessGetInformation(pid);
+                var proc = _vmm.ProcessGetInformation(pid);
                 if (proc.fValid)
                 {
-                    processes.Add(proc);
+                    _processes.Add(proc);
                 }
             }
-            processes = processes.OrderBy(x => x.dwPID).ToList();
+            _processes = _processes.OrderBy(x => x.dwPID).ToList();
         }
 
         public void dumpModules(uint pid)
         {
-            modules.Clear();
-            foreach (var module in vmm.Map_GetModule(pid))
+            _modules.Clear();
+            foreach (var module in _vmm.Map_GetModule(pid))
             {
                 if (module.fValid)
                 {
-                    modules.Add(module);
+                    _modules.Add(module);
                 }
             }
-            modules = modules.OrderBy(x => x.vaBase).ToList();
+            _modules = _modules.OrderBy(x => x.vaBase).ToList();
         }
 
         public Vmm.MAP_MODULEENTRY? popModule()
         {
-            if (modules.Count() == 0) return null;
-            var module = modules.ElementAt(0);
-            modules.RemoveAt(0);
+            if (_modules.Count() == 0) return null;
+            var module = _modules.ElementAt(0);
+            _modules.RemoveAt(0);
             return module;
         } 
 
         public Vmm.PROCESS_INFORMATION? popProcess()
         {
-            if (processes.Count() == 0) return null;
-            var proc = processes.ElementAt(0);
-            processes.RemoveAt(0);
+            if (_processes.Count() == 0) return null;
+            var proc = _processes.ElementAt(0);
+            _processes.RemoveAt(0);
             return proc;
         }
 
         public String? getImageByMBI(MemoryAPI.MEMORY_BASIC_INFORMATION mbi)
         {
-            if (mbi.Type == MemoryAPI.TypeEnum.MEM_IMAGE && vadImages.ContainsKey((UInt64)mbi.BaseAddress))
+            if (mbi.Type == MemoryAPI.TypeEnum.MEM_IMAGE && _vadImages.ContainsKey((UInt64)mbi.BaseAddress))
             {
-                return vadImages[(UInt64)mbi.BaseAddress];
+                return _vadImages[(UInt64)mbi.BaseAddress];
             }
             return null;
         }
@@ -79,7 +79,7 @@ namespace CEServerWindows
             var sortedList = vads.OrderBy(x => x.vaStart).ToList();
             var full = new Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION>();
             UInt64 ptr = 0;
-            vadImages.Clear();
+            _vadImages.Clear();
             while (sortedList.Any())
             {
                 var nextVad = sortedList.ElementAt(0);
@@ -95,7 +95,7 @@ namespace CEServerWindows
                     full.Add(ptr, curr);
                     if (curr.Type == MemoryAPI.TypeEnum.MEM_IMAGE)
                     {
-                        vadImages.Add(ptr, nextVad.wszText);
+                        _vadImages.Add(ptr, nextVad.wszText);
                     }
                     ptr += (UInt64)nextVad.cbSize;
                 }
@@ -115,11 +115,11 @@ namespace CEServerWindows
 
         private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> dumpVads(uint pid, bool cached = true)
         {
-            if (!vads.Any() || !cached)
+            if (!_vads.Any() || !cached)
             {
-                vads = transformVadsToMBIS(vmm.Map_GetVad(pid));
+                _vads = transformVadsToMBIS(_vmm.Map_GetVad(pid));
             }
-            return vads;
+            return _vads;
         }
 
         public MemoryAPI.MEMORY_BASIC_INFORMATION? getVad(uint pid, UInt64 Address)
@@ -149,13 +149,19 @@ namespace CEServerWindows
             return MemoryAPI.TypeEnum.MEM_MAPPED;
         }
 
+        public bool WPM(uint pid, ulong qwA, byte[] data)
+        {
+            return _vmm.MemWrite(pid, qwA, data);
+        }
+
+
         public unsafe byte[] RPM(uint pid, ulong qwA, uint cb)
         {
             uint cbRead,cbRead2;
             byte[] data = new byte[cb];
             fixed (byte* pb = data)
             {
-                if (!vmmi.VMMDLL_MemReadEx(vmm.hVMM, pid, qwA, pb, cb, out cbRead, Vmm.FLAG_NOCACHE))
+                if (!vmmi.VMMDLL_MemReadEx(_vmm.hVMM, pid, qwA, pb, cb, out cbRead, Vmm.FLAG_NOCACHE))
                 {
                     return null;
                 }
@@ -165,7 +171,7 @@ namespace CEServerWindows
                 byte[] data2 = new byte[cb - cbRead];
                 fixed (byte* pb2 = data2)
                 {
-                    if (!vmmi.VMMDLL_MemReadEx(vmm.hVMM, pid, qwA + cbRead, pb2, cb - cbRead, out cbRead2, Vmm.FLAG_NOCACHE))
+                    if (!vmmi.VMMDLL_MemReadEx(_vmm.hVMM, pid, qwA + cbRead, pb2, cb - cbRead, out cbRead2, Vmm.FLAG_NOCACHE))
                     {
                         Array.Resize<byte>(ref data, (int)cbRead);
                         return data;
@@ -179,7 +185,7 @@ namespace CEServerWindows
 
         ~FPGA()
         {
-            vmm.Close();
+            _vmm.Close();
         }
 
     }

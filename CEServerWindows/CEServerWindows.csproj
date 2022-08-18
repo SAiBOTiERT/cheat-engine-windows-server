@@ -67,12 +67,16 @@
     <Compile Include="CheatEnginePackets\C2S\FPGA\ReadProcessMemoryCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\FPGA\VirtualQueryExCommand.cs" />
     <Compile Include="CheatEnginePackets\C2S\FPGA\VirtualQueryExFullCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\FPGA\WriteProcessMemoryCommand.cs" />
+    <Compile Include="CheatEnginePackets\C2S\WIN\WriteProcessMemoryCommand.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\CloseHandleResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\GetArchitectureResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\GetRegionInfoResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\GetSymbolsFromFileResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\GetVersionResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\HandleResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\FPGA\WriteProcessMemoryResponse.cs" />
+    <Compile Include="CheatEnginePackets\S2C\WIN\WriteProcessMemoryResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\ICheatEngineResponse.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\Module32Response.cs" />
     <Compile Include="CheatEnginePackets\S2C\FPGA\Process32Response.cs" />

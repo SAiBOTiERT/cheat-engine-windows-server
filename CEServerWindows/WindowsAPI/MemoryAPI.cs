@@ -46,6 +46,9 @@ namespace CEServerWindows.WindowsAPI
             public TypeEnum Type;
         }
 
+        [DllImport("kernel32.dll")]
+        public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesWritten);
+
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool ReadProcessMemory(
            IntPtr hProcess,
