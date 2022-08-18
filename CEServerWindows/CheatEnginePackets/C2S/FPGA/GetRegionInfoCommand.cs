@@ -1,10 +1,5 @@
-﻿using CEServerWindows.CheatEnginePackets.S2C;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using CEServerWindows.CheatEnginePackets.S2C.FPGA;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
@@ -36,8 +31,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override GetRegionInfoResponse Process()
         {
-            var x = CEServerWindows.FPGA.instance.getVadEntry(Pid, Address);
-            return new GetRegionInfoResponse(x);
+            return new GetRegionInfoResponse(CEServerWindows.FPGA.instance.getVad(Pid, Address));
         }
     }
 }

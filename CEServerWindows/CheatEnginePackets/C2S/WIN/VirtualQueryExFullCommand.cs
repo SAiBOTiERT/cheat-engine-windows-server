@@ -1,10 +1,7 @@
-﻿using CEServerWindows.CheatEnginePackets.S2C;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using CEServerWindows.CheatEnginePackets.S2C.WIN;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
@@ -13,21 +10,23 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
     {
 
         public IntPtr Handle;
+        public byte Config;
 
         public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEXFULL;// throw new NotImplementedException();
 
         public VirtualQueryExFullCommand() { }
 
-        public VirtualQueryExFullCommand(IntPtr handle) 
+        public VirtualQueryExFullCommand(IntPtr handle, byte config) 
         {
             this.Handle = handle;
+            this.Config = config;
             this.initialized = true;
         }
 
         public override void Initialize(BinaryReader reader)
         {
             this.Handle = (IntPtr)reader.ReadInt32();
-            reader.ReadByte();//Cheat engine/linux specific flags?
+            this.Config = reader.ReadByte();
             this.initialized = true;
         }
 

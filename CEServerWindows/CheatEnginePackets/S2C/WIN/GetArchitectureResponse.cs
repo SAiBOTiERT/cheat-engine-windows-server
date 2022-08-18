@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CEServerWindows.CheatEnginePackets.S2C.WIN
+﻿namespace CEServerWindows.CheatEnginePackets.S2C.WIN
 {
     public class GetArchitectureResponse : ICheatEngineResponse
     {

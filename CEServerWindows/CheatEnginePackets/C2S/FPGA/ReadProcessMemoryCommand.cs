@@ -1,9 +1,5 @@
-﻿using CEServerWindows.CheatEnginePackets.S2C;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using CEServerWindows.CheatEnginePackets.S2C.FPGA;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
@@ -39,17 +35,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override ReadProcessMemoryResponse Process()
         {
-            /*var data = new byte[this.Size];
-            IntPtr dataRead;
-            WindowsAPI.MemoryAPI.ReadProcessMemory(this.Handle, (IntPtr)this.Address, data, this.Size, out dataRead);
-            if((int)dataRead < this.Size)
-            {
-                var data2 = new byte[(int)dataRead];
-                Array.Copy(data, 0, data2, 0, data2.Length);
-                data = data2;
-            }*/
-
-            return new ReadProcessMemoryResponse(CEServerWindows.FPGA.instance.vmm.MemRead(Pid, Address, (uint)Size, vmmsharp.Vmm.FLAG_NOCACHE), this.Compress);
+            return new ReadProcessMemoryResponse(CEServerWindows.FPGA.instance.RPM(Pid, Address, (uint)Size), this.Compress);
         }
     }
 }

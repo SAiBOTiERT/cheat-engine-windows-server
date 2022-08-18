@@ -1,15 +1,7 @@
-﻿using CEServerWindows.CheatEnginePackets;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using CEServerWindows.CheatEnginePackets.C2S;
-using System.IO;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Runtime.InteropServices;
+using CEServerWindows.WindowsAPI;
 using vmmsharp;
 
 namespace CEServerWindows
@@ -17,11 +9,10 @@ namespace CEServerWindows
     public class FPGA
     {
         public static FPGA instance;
-        public Vmm? vmm = null;
+        private Vmm vmm;
         private List<Vmm.PROCESS_INFORMATION> processes = new ();
         private List<Vmm.MAP_MODULEENTRY> modules = new ();
-        private List<Vmm.MAP_VADENTRY> vads = new ();
-        public int vadPtr = 0;
+        private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> vads = new ();
 
         public FPGA()
         {
@@ -55,7 +46,6 @@ namespace CEServerWindows
             }
             modules = modules.OrderBy(x => x.vaBase).ToList();
         }
-        //modules = new List<Vmm.MAP_VADENTRY>(vads.ToArray().Where(vad => vad.fImage));
 
         public Vmm.MAP_MODULEENTRY? popModule()
         {
@@ -73,57 +63,107 @@ namespace CEServerWindows
             return proc;
         }
 
-        public List<Vmm.MAP_VADENTRY> dumpVads(uint pid, bool cached = true)
+        private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> addFreeVads(Vmm.MAP_VADENTRY[] vads)
         {
-            if (vads.Count() == 0 || !cached)
+            var sortedList = vads.OrderBy(x => x.vaStart).ToList();
+            var full = new Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION>();
+            UInt64 ptr = 0;
+            while (sortedList.Any())
             {
-                vads = new List<Vmm.MAP_VADENTRY>(vmm.Map_GetVad(pid));
+                var nextVad = sortedList.ElementAt(0);
+                var curr = new MemoryAPI.MEMORY_BASIC_INFORMATION();
+                if(nextVad.vaStart == ptr)
+                {
+                    sortedList.RemoveAt(0);
+                    curr.BaseAddress = (IntPtr)nextVad.vaStart;
+                    curr.RegionSize = (IntPtr)nextVad.cbSize;
+                    curr.Protect = MemoryAPI.AllocationProtectEnum.PAGE_READWRITE;
+                    curr.Type = getWin32Type(nextVad);
+                    curr.State = 0;
+                    full.Add(ptr, curr);
+                    ptr += (UInt64)nextVad.cbSize;
+                }
+                else
+                {
+                    curr.BaseAddress = (IntPtr)ptr;
+                    curr.RegionSize = (IntPtr)(nextVad.vaStart - (UInt64)curr.BaseAddress);
+                    curr.Protect = MemoryAPI.AllocationProtectEnum.PAGE_NOACCESS;
+                    curr.Type = 0;
+                    curr.State = MemoryAPI.StateEnum.MEM_FREE;
+                    full.Add(ptr, curr);
+                    ptr += (UInt64)curr.RegionSize;
+                }
             }
-            return vads.OrderBy(x => x.vaStart).ToList();
+            return full;
         }
 
-        public Vmm.MAP_VADENTRY? getVadEntry(uint pid, ulong Address)
+        private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> dumpVads(uint pid, bool cached = true)
         {
-            if (Address == 0)
+            if (!vads.Any() || !cached)
             {
-                vadPtr = 0;
+                vads = addFreeVads(vmm.Map_GetVad(pid));
             }
-            var vads = dumpVads(pid).ToArray();
-            if (vadPtr < vads.Length)
+            return vads;
+        }
+
+        public MemoryAPI.MEMORY_BASIC_INFORMATION? getVad(uint pid, UInt64 Address)
+        {
+            var vads = dumpVads(pid, Address != 0);
+
+            foreach (var mbi in vads.Values)
             {
-                var vad  =vads.ElementAtOrDefault(vadPtr);
-                vadPtr++;
-                return vad;
+                if (Address >= (UInt64)mbi.BaseAddress &&
+                    Address <= (UInt64)mbi.BaseAddress + (UInt64)mbi.RegionSize - 1)
+                {
+                    return mbi;
+                }
             }
             return null;
         }
 
-        public static int getWin32Type(Vmm.MAP_VADENTRY vad)
+        public MemoryAPI.MEMORY_BASIC_INFORMATION[] getAllVads(uint pid)
         {
-            switch (vad.VadType) {
-                case 2:
-                    return 0x1000000; //TYPE_MEM_IMAGE;
-                case 1:
-                    return 0x40000; //TYPE_MEM_MAPPED;
-                default:
-                    return 0x20000; //TYPE_MEM_PRIVATE;
-            }
+            return dumpVads(pid, false).Values.ToArray();
         }
 
-        public static uint getWin32Protection(Vmm.MAP_VADENTRY vad)
+        private MemoryAPI.TypeEnum getWin32Type(Vmm.MAP_VADENTRY vad)
         {
-            return 0x04; //PAGE_READWRITE
-            if (vad.MemCommit)
+            if(vad.fImage) return MemoryAPI.TypeEnum.MEM_IMAGE;
+            if(vad.fPrivateMemory) return MemoryAPI.TypeEnum.MEM_PRIVATE;
+            return MemoryAPI.TypeEnum.MEM_MAPPED;
+        }
+
+        public unsafe byte[] RPM(uint pid, ulong qwA, uint cb)
+        {
+            uint cbRead,cbRead2;
+            byte[] data = new byte[cb];
+            fixed (byte* pb = data)
             {
-                return 0x04; //PAGE_READWRITE
+                if (!vmmi.VMMDLL_MemReadEx(vmm.hVMM, pid, qwA, pb, cb, out cbRead, Vmm.FLAG_NOCACHE))
+                {
+                    return null;
+                }
             }
-            //if (vad.Protection == 1) return 2;
-            return vad.Protection; //PAGE_READWRITE
+            if (cbRead != cb)
+            {
+                byte[] data2 = new byte[cb - cbRead];
+                fixed (byte* pb2 = data2)
+                {
+                    if (!vmmi.VMMDLL_MemReadEx(vmm.hVMM, pid, qwA + cbRead, pb2, cb - cbRead, out cbRead2, Vmm.FLAG_NOCACHE))
+                    {
+                        Array.Resize<byte>(ref data, (int)cbRead);
+                        return data;
+                    }
+                    Array.Copy(data2, 0, data, cbRead, data2.Length);
+                }
+
+            }
+            return data;
         }
 
         ~FPGA()
         {
-            vmm?.Close();
+            vmm.Close();
         }
 
     }

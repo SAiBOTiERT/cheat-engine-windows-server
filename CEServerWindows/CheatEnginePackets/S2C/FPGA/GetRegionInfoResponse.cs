@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using vmmsharp;
+using CEServerWindows.WindowsAPI;
 
 namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
 {
     public class GetRegionInfoResponse : ICheatEngineResponse 
     {
-        public Vmm.MAP_VADENTRY? Vad;
+        public MemoryAPI.MEMORY_BASIC_INFORMATION? Vad;
 
-        public GetRegionInfoResponse(Vmm.MAP_VADENTRY? vad)
+        public GetRegionInfoResponse(MemoryAPI.MEMORY_BASIC_INFORMATION? vad)
         {
             this.Vad = vad;
         }
@@ -27,13 +24,13 @@ namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
             {
                 br.Write((byte)1);
                 //br.Write(CEServerWindows.FPGA.getWin32Protection((int)Vad?.Protection));
-                br.Write(CEServerWindows.FPGA.getWin32Protection(Vad ?? new Vmm.MAP_VADENTRY()));
-                br.Write(CEServerWindows.FPGA.getWin32Type(Vad ?? new Vmm.MAP_VADENTRY()));
-                br.Write((Int64)Vad?.vaStart);
-                br.Write((Int64)Vad?.cbSize);
-                br.Write((Byte)Vad?.wszText.Length);
-                br.Write(Encoding.UTF8.GetBytes(Vad?.wszText));
-
+                br.Write((uint)Vad?.Protect);
+                br.Write((uint)Vad?.Type);
+                br.Write((Int64)Vad?.BaseAddress);
+                br.Write((Int64)Vad?.RegionSize);
+                //br.Write((Byte)Vad?.wszText.Length);
+                //br.Write(Encoding.UTF8.GetBytes(Vad?.wszText));
+                br.Write((byte)0);
             }
             else
             {

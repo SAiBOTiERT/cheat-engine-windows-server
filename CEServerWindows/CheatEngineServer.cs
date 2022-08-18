@@ -1,16 +1,11 @@
 ﻿using CEServerWindows.CheatEnginePackets;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using CEServerWindows.CheatEnginePackets.C2S;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Runtime.InteropServices;
-using vmmsharp;
 
 namespace CEServerWindows
 {
@@ -54,9 +49,12 @@ namespace CEServerWindows
             {
                 try
                 {
-
                     var command = this.packetManager.ReadNextCommand(reader);
                     var output = this.packetManager.ProcessAndGetBytes(command);
+
+                    //Console.WriteLine($"{command.CommandType}");
+
+
                     /* if(command.CommandType != CommandType.CMD_READPROCESSMEMORY)
                          Console.WriteLine(BitConverter.ToString(output).Replace("-", ""));*/
                    // Console.WriteLine("{0} returned {1} bytes", command.CommandType, output.Length);
@@ -135,7 +133,9 @@ namespace CEServerWindows
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.ReadProcessMemoryCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetSymbolsFromFileCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetRegionInfoCommand());
-            }else if(_mode == Mode.x64){
+            }
+            else if(_mode == Mode.x64)
+            {
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.CreateToolHelp32SnapshotCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.GetVersionCommand());
                 this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.Module32FirstCommand());

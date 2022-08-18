@@ -341,7 +341,7 @@ namespace vmmsharp
         }
 
         private bool disposed = false;
-        private IntPtr hVMM = IntPtr.Zero;
+        public IntPtr hVMM = IntPtr.Zero;
 
         // private zero-argument constructor - do not use!
         private Vmm()
@@ -512,6 +512,7 @@ namespace vmmsharp
         public static uint FLAG_NOPAGING_IO = 0x0020;  // do not try to retrieve memory from paged out memory if read would incur additional I/O (even if possible).
         public static uint FLAG_NOCACHEPUT = 0x0100;  // do not write back to the data cache upon successful read from memory acquisition device.
         public static uint FLAG_CACHE_RECENT_ONLY = 0x0200;  // only fetch from the most recent active cache region when reading.
+        public static uint FLAG_NO_PREDICTIVE_READ = 0x0400;  // do not perform additional predictive page reads (default on smaller requests).
 
         public unsafe MEM_SCATTER[] MemReadScatter(uint pid, uint flags, params ulong[] qwA)
         {

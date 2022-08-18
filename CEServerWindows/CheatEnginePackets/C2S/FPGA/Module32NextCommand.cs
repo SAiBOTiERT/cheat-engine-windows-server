@@ -1,10 +1,4 @@
-﻿using CEServerWindows.CheatEnginePackets.S2C;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+﻿using CEServerWindows.CheatEnginePackets.S2C.FPGA;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {

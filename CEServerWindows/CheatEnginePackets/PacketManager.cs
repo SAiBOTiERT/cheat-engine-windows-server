@@ -1,10 +1,7 @@
 ﻿using CEServerWindows.CheatEnginePackets.C2S;
-using CEServerWindows.CheatEnginePackets.S2C;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace CEServerWindows.CheatEnginePackets
 {

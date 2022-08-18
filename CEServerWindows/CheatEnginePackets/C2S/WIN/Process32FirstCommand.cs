@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using CEServerWindows.CheatEnginePackets.S2C;
 using CEServerWindows.CheatEnginePackets.S2C.WIN;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN

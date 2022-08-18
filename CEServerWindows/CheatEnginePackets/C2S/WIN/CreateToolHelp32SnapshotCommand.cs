@@ -1,9 +1,5 @@
-﻿using CEServerWindows.CheatEnginePackets.S2C;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using CEServerWindows.CheatEnginePackets.S2C.WIN;
 using CEServerWindows.WindowsAPI;
 

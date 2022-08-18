@@ -1,10 +1,4 @@
-﻿using CEServerWindows.CheatEnginePackets.S2C;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.IO;
 using CEServerWindows.CheatEnginePackets.S2C.FPGA;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
@@ -33,7 +27,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override VirtualQueryExFullResponse Process()
         {
-            return new VirtualQueryExFullResponse(CEServerWindows.FPGA.instance.dumpVads(Pid, false));
+            return new VirtualQueryExFullResponse(CEServerWindows.FPGA.instance.getAllVads(Pid));
         }
     }
 }

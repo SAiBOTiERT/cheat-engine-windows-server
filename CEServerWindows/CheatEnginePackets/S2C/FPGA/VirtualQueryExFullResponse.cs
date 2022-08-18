@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using vmmsharp;
+﻿using System.IO;
+using CEServerWindows.WindowsAPI;
 
 namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
 {
     public class VirtualQueryExFullResponse : ICheatEngineResponse
     {
 
-        public List<Vmm.MAP_VADENTRY> Regions;
-        public VirtualQueryExFullResponse(List<Vmm.MAP_VADENTRY> regions)
+        public MemoryAPI.MEMORY_BASIC_INFORMATION[] Regions;
+        public VirtualQueryExFullResponse(MemoryAPI.MEMORY_BASIC_INFORMATION[] regions)
         {
             this.Regions = regions;
         }
@@ -20,15 +16,16 @@ namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
         {
             MemoryStream ms = new MemoryStream();
             BinaryWriter br = new BinaryWriter(ms);
-            br.Write(Regions.Count);
+            br.Write(Regions.Length);
             //The number of bytes return by VirtualQueryEx is the number of bytes written to mbi, if it's 0 it failed
             //But in Cheat engise server 1 is success and 0 is failed
+
             foreach (var region in Regions)
             {//Yes this is reversed from VirtualQueryEx....
-                br.Write((long)region.vaStart);
-                br.Write((long)region.cbSize);
-                br.Write(CEServerWindows.FPGA.getWin32Protection(region));
-                br.Write(CEServerWindows.FPGA.getWin32Type(region));
+                br.Write((long)region.BaseAddress);
+                br.Write((long)region.RegionSize);
+                br.Write((uint)region.Protect);
+                br.Write((uint)region.Type);
             }
 
             br.Close();

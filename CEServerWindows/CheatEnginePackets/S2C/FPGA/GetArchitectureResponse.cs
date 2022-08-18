@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
+﻿namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
 {
     public class GetArchitectureResponse : ICheatEngineResponse
     {
