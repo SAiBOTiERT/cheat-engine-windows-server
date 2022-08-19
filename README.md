@@ -24,6 +24,6 @@ Even though the official cheat engine server 'ports' a few of Windows API calls 
 
 # FPGA module support
 Tested with:
-* [pcileech 4.14](https://github.com/ufrisk/pcileech/releases/tag/v4.14)
+* [pcileech-fpga 4.10](https://github.com/ufrisk/pcileech-fpga/releases/tag/v4.10)
 * [MemProcFS 4.9](https://github.com/ufrisk/MemProcFS/releases/tag/v4.9)
 * [Cheat Engine 7.3](https://github.com/cheat-engine/cheat-engine/releases/tag/7.3)
