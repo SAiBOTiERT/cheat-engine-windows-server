@@ -27,7 +27,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override HandleResponse Process()
         {
-            return new HandleResponse((IntPtr)this.ProcessID);
+            return new HandleResponse((IntPtr)CEServerWindows.FPGA.instance.OpenProcessCommand(ProcessID));
         }
     }
 }

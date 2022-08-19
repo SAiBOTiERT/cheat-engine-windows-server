@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using CEServerWindows.WindowsAPI;
 using vmmsharp;
 
@@ -157,30 +156,20 @@ namespace CEServerWindows
 
         public unsafe byte[] RPM(uint pid, ulong qwA, uint cb)
         {
-            uint cbRead,cbRead2;
             byte[] data = new byte[cb];
             fixed (byte* pb = data)
             {
-                if (!vmmi.VMMDLL_MemReadEx(_vmm.hVMM, pid, qwA, pb, cb, out cbRead, Vmm.FLAG_NOCACHE))
-                {
-                    return null;
-                }
-            }
-            if (cbRead != cb)
-            {
-                byte[] data2 = new byte[cb - cbRead];
-                fixed (byte* pb2 = data2)
-                {
-                    if (!vmmi.VMMDLL_MemReadEx(_vmm.hVMM, pid, qwA + cbRead, pb2, cb - cbRead, out cbRead2, Vmm.FLAG_NOCACHE))
-                    {
-                        Array.Resize<byte>(ref data, (int)cbRead);
-                        return data;
-                    }
-                    Array.Copy(data2, 0, data, cbRead, data2.Length);
-                }
-
+                vmmi.VMMDLL_MemReadEx(_vmm.hVMM, pid, qwA, pb, cb, out _,
+                    Vmm.FLAG_NOCACHE | Vmm.FLAG_ZEROPAD_ON_FAIL);
             }
             return data;
+        }
+
+        public uint OpenProcessCommand(uint pid)
+        {
+            _vads.Clear();
+            _vadImages.Clear();
+            return pid;
         }
 
         ~FPGA()

@@ -121,39 +121,39 @@ namespace CEServerWindows
         {
             if (_mode == Mode.FPGA)
             {
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.CreateToolHelp32SnapshotCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetVersionCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.Module32FirstCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.Module32NextCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.Process32FirstCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.Process32NextCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.CloseHandleCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.OpenProcessCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetArchitectureCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.VirtualQueryExCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.VirtualQueryExFullCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.ReadProcessMemoryCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetSymbolsFromFileCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.GetRegionInfoCommand());
-                if(enableWPM) this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.FPGA.WriteProcessMemoryCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.CreateToolHelp32SnapshotCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.GetVersionCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.Module32FirstCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.Module32NextCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.Process32FirstCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.Process32NextCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.CloseHandleCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.OpenProcessCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.GetArchitectureCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.VirtualQueryExCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.VirtualQueryExFullCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.ReadProcessMemoryCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.GetSymbolsFromFileCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.GetRegionInfoCommand());
+                if(enableWPM) this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.WriteProcessMemoryCommand());
             }
             else if(_mode == Mode.x64)
             {
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.CreateToolHelp32SnapshotCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.GetVersionCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.Module32FirstCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.Module32NextCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.Process32FirstCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.Process32NextCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.CloseHandleCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.OpenProcessCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.GetArchitectureCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.VirtualQueryExCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.VirtualQueryExFullCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.ReadProcessMemoryCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.GetSymbolsFromFileCommand());
-                this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.GetRegionInfoCommand());
-                if(enableWPM) this.RegisterCommandHandler(new CEServerWindows.CheatEnginePackets.C2S.WIN.WriteProcessMemoryCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.CreateToolHelp32SnapshotCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.GetVersionCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.Module32FirstCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.Module32NextCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.Process32FirstCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.Process32NextCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.CloseHandleCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.OpenProcessCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.GetArchitectureCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.VirtualQueryExCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.VirtualQueryExFullCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.ReadProcessMemoryCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.GetSymbolsFromFileCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.GetRegionInfoCommand());
+                if(enableWPM) this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.WriteProcessMemoryCommand());
             }
         }
 
