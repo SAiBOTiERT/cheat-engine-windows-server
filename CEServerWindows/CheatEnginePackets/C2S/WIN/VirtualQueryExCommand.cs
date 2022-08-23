@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using CEServerWindows.CheatEnginePackets.S2C.WIN;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 {
@@ -11,9 +11,13 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
         public IntPtr Handle;
         public UInt64 Address;
 
-        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEX;// throw new NotImplementedException();
+        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEX;
 
-        public VirtualQueryExCommand() { }
+        public VirtualQueryExCommand()
+        {
+
+        }
+
 
         public VirtualQueryExCommand(IntPtr handle, UInt64 address) 
         {
@@ -34,7 +38,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
             WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION mbi = new WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION();
             int ret = WindowsAPI.MemoryAPI.VirtualQueryEx(Handle, (IntPtr)Address, out mbi, (uint)Marshal.SizeOf(mbi));
 
-            return new VirtualQueryExResponse(ret, mbi);
+            return new VirtualQueryExResponse(ret != 0, mbi);
         }
     }
 }

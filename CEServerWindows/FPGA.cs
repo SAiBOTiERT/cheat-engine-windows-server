@@ -48,20 +48,28 @@ namespace CEServerWindows
             _modules = _modules.OrderBy(x => x.vaBase).ToList();
         }
 
-        public Vmm.MAP_MODULEENTRY? popModule()
+        public ToolHelp.MODULEENTRY32? popModule()
         {
             if (_modules.Count() == 0) return null;
             var module = _modules.ElementAt(0);
             _modules.RemoveAt(0);
-            return module;
+            var me32 = new ToolHelp.MODULEENTRY32();
+            me32.modBaseAddr = (IntPtr)module.vaBase;
+            me32.GlblcntUsage = 0;
+            me32.modBaseSize = module.cbImageSize;
+            me32.szModule = module.wszFullName;
+            return me32;
         } 
 
-        public Vmm.PROCESS_INFORMATION? popProcess()
+        public ToolHelp.PROCESSENTRY32? popProcess()
         {
             if (_processes.Count() == 0) return null;
             var proc = _processes.ElementAt(0);
             _processes.RemoveAt(0);
-            return proc;
+            var pe32 = new ToolHelp.PROCESSENTRY32();
+            pe32.th32ProcessID = proc.dwPID;
+            pe32.szExeFile = proc.szNameLong;
+            return pe32;
         }
 
         public String? getImageByMBI(MemoryAPI.MEMORY_BASIC_INFORMATION mbi)

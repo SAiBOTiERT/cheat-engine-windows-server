@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
+namespace CEServerWindows.CheatEnginePackets.S2C
 {
     public class ReadProcessMemoryResponse : ICheatEngineResponse
     {

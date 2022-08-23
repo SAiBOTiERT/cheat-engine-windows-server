@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 
-namespace CEServerWindows.CheatEnginePackets.S2C.WIN
+namespace CEServerWindows.CheatEnginePackets.S2C
 {
-    public class GetAbiResponse : ICheatEngineResponse
+    public class HandleResponse : ICheatEngineResponse
     {
-        public Abi Abi;
+        public IntPtr Handle;
 
-        public GetAbiResponse(Abi abi)
+        public HandleResponse(IntPtr handle)
         {
-            this.Abi = abi;
+            this.Handle = handle;
         }
 
         public byte[] Serialize()
@@ -17,7 +17,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C.WIN
             MemoryStream ms = new MemoryStream();
             BinaryWriter br = new BinaryWriter(ms);
 
-            br.Write((byte)this.Abi);
+            br.Write((int)this.Handle);
             br.Close();
             return ms.ToArray();
         }

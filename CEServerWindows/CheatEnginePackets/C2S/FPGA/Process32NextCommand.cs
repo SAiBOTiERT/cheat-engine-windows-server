@@ -1,4 +1,5 @@
-﻿using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+﻿using CEServerWindows.CheatEnginePackets.S2C;
+using CEServerWindows.WindowsAPI;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -8,8 +9,8 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override Process32Response Process()
         {
-            var proc = CEServerWindows.FPGA.instance.popProcess();
-            return new Process32Response(proc);
+            var pe32 = CEServerWindows.FPGA.instance.popProcess();
+            return new Process32Response(pe32 != null, pe32 ?? new ToolHelp.PROCESSENTRY32());
         }
 
     }

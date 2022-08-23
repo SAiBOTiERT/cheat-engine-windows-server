@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.WIN;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 {

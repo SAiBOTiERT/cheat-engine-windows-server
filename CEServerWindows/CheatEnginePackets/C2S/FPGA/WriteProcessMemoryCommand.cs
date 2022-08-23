@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -13,7 +13,9 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override CommandType CommandType => CommandType.CMD_WRITEPROCESSMEMORY;
 
-        public WriteProcessMemoryCommand() { }
+        public WriteProcessMemoryCommand()
+        {
+        }
 
         public WriteProcessMemoryCommand(uint pid, IntPtr address, int size, byte[] data)
         {

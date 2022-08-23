@@ -1,21 +1,23 @@
 ﻿using System;
 using System.IO;
 
-namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
+namespace CEServerWindows.CheatEnginePackets.S2C
 {
-    public class WriteProcessMemoryResponse : ICheatEngineResponse
+    public class GetAbiResponse : ICheatEngineResponse
     {
-        public int Written;
-        public WriteProcessMemoryResponse(int written)
+        public Abi Abi;
+
+        public GetAbiResponse(Abi abi)
         {
-            this.Written = written;
+            this.Abi = abi;
         }
 
         public byte[] Serialize()
         {
             MemoryStream ms = new MemoryStream();
             BinaryWriter br = new BinaryWriter(ms);
-            br.Write(Written);
+
+            br.Write((byte)this.Abi);
             br.Close();
             return ms.ToArray();
         }

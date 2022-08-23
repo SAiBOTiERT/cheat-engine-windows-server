@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -9,7 +9,7 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
         public WindowsAPI.ToolHelp.SnapshotFlags SnapshotFlags;
         public uint ProcessID;
 
-        public sealed override CommandType CommandType => CommandType.CMD_CREATETOOLHELP32SNAPSHOT;// throw new NotImplementedException();
+        public sealed override CommandType CommandType => CommandType.CMD_CREATETOOLHELP32SNAPSHOT;
 
         public CreateToolHelp32SnapshotCommand()
         {

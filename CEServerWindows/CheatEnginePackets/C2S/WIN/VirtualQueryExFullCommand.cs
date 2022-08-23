@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using CEServerWindows.CheatEnginePackets.S2C.WIN;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 {
@@ -12,9 +12,11 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
         public IntPtr Handle;
         public byte Config;
 
-        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEXFULL;// throw new NotImplementedException();
+        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEXFULL;
 
-        public VirtualQueryExFullCommand() { }
+        public VirtualQueryExFullCommand()
+        {
+        }
 
         public VirtualQueryExFullCommand(IntPtr handle, byte config) 
         {

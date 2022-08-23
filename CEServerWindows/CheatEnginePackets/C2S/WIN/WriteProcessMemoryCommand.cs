@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.WIN;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 {
@@ -13,7 +13,9 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 
         public override CommandType CommandType => CommandType.CMD_WRITEPROCESSMEMORY;
 
-        public WriteProcessMemoryCommand() { }
+        public WriteProcessMemoryCommand()
+        {
+        }
 
         public WriteProcessMemoryCommand(IntPtr handle, IntPtr address, int size, byte[] data)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.WIN;
+using CEServerWindows.CheatEnginePackets.S2C;
 using CEServerWindows.WindowsAPI;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
@@ -10,12 +10,14 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
         public WindowsAPI.ToolHelp.SnapshotFlags SnapshotFlags;
         public uint ProcessID;
 
-        public sealed override CommandType CommandType => CommandType.CMD_CREATETOOLHELP32SNAPSHOT;// throw new NotImplementedException();
+        public sealed override CommandType CommandType => CommandType.CMD_CREATETOOLHELP32SNAPSHOT;
 
         public CreateToolHelp32SnapshotCommand()
         {
 
         }
+
+
         public CreateToolHelp32SnapshotCommand(WindowsAPI.ToolHelp.SnapshotFlags snapshotFlags, uint pid)
         {
             this.SnapshotFlags = snapshotFlags;

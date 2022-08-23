@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -8,9 +8,11 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public uint Pid;
 
-        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEXFULL;// throw new NotImplementedException();
+        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEXFULL;
 
-        public VirtualQueryExFullCommand() { }
+        public VirtualQueryExFullCommand() 
+        {
+        }
 
         public VirtualQueryExFullCommand(uint pid) 
         {

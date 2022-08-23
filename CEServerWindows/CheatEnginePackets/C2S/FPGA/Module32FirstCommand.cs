@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+using CEServerWindows.CheatEnginePackets.S2C;
+using CEServerWindows.WindowsAPI;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -27,8 +28,8 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
         public override Module32Response Process()
         {
             CEServerWindows.FPGA.instance.dumpModules(this.Pid);
-            var module = CEServerWindows.FPGA.instance.popModule();
-            return new Module32Response(module);
+            var me32 = CEServerWindows.FPGA.instance.popModule();
+            return new Module32Response(me32 != null, me32 ?? new ToolHelp.MODULEENTRY32());
         }
     }
 }

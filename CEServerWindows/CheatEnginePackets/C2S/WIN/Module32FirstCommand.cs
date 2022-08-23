@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 {
-    public class Module32FirstCommand : CheatEngineCommand<S2C.WIN.Module32Response>
+    public class Module32FirstCommand : CheatEngineCommand<Module32Response>
     {
         public override CommandType CommandType => CommandType.CMD_MODULE32FIRST;
 
@@ -25,14 +26,14 @@ namespace CEServerWindows.CheatEnginePackets.C2S.WIN
             this.initialized = true;
         }
 
-        public override S2C.WIN.Module32Response Process()
+        public override Module32Response Process()
         {
             WindowsAPI.ToolHelp.MODULEENTRY32 moduleEntry = new WindowsAPI.ToolHelp.MODULEENTRY32();
             moduleEntry.dwSize = (uint)Marshal.SizeOf(moduleEntry);
 
             var result = WindowsAPI.ToolHelp.Module32First(this.Handle, ref moduleEntry);
 
-            return new S2C.WIN.Module32Response(result, moduleEntry);
+            return new Module32Response(result, moduleEntry);
         }
     }
 }

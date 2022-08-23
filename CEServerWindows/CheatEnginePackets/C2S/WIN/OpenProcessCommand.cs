@@ -1,16 +1,16 @@
 ﻿using System;
 using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.WIN;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.WIN
 {
     public class OpenProcessCommand : CheatEngineCommand<HandleResponse>
     {
-        public override CommandType CommandType => CommandType.CMD_OPENPROCESS;// throw new NotImplementedException();
+        public override CommandType CommandType => CommandType.CMD_OPENPROCESS;
         public int ProcessID;
+
         public OpenProcessCommand()
         {
-
         }
 
         public OpenProcessCommand(int pid)

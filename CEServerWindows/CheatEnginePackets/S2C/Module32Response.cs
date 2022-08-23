@@ -1,17 +1,17 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
+namespace CEServerWindows.CheatEnginePackets.S2C
 {
     public class Module32Response : ICheatEngineResponse
     {
         public bool Result;
-        public vmmsharp.Vmm.MAP_MODULEENTRY? Module;
+        public WindowsAPI.ToolHelp.MODULEENTRY32 ModuleEntry;
 
-        public Module32Response(vmmsharp.Vmm.MAP_MODULEENTRY? module)
+        public Module32Response(bool result, WindowsAPI.ToolHelp.MODULEENTRY32 moduleEntry)
         {
-            this.Result = module != null;
-            this.Module = module;
+            this.Result = result;
+            this.ModuleEntry = moduleEntry;
         }
 
         public byte[] Serialize()
@@ -22,11 +22,11 @@ namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
             br.Write((int)(this.Result ? 1 : 0));
             if (this.Result)
             {
-                br.Write((long)Module?.vaBase);
-                br.Write(0);
-                br.Write(Module?.cbImageSize ?? 0);
-                br.Write(Module?.wszText.Length ?? 0);
-                br.Write(Encoding.UTF8.GetBytes(Module?.wszText));
+                br.Write((long)ModuleEntry.modBaseAddr);
+                br.Write(ModuleEntry.GlblcntUsage);
+                br.Write(ModuleEntry.modBaseSize);
+                br.Write(ModuleEntry.szModule.Length);
+                br.Write(Encoding.UTF8.GetBytes(ModuleEntry.szModule));
             }
             else 
             {

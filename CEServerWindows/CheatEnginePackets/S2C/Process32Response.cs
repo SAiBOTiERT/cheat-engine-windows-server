@@ -1,17 +1,17 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
+namespace CEServerWindows.CheatEnginePackets.S2C
 {
     public class Process32Response : ICheatEngineResponse
     {
         public bool Result;
-        public vmmsharp.Vmm.PROCESS_INFORMATION? Proc;
+        public WindowsAPI.ToolHelp.PROCESSENTRY32 ProcessEntry;
 
-        public Process32Response(vmmsharp.Vmm.PROCESS_INFORMATION? proc)
+        public Process32Response(bool result, WindowsAPI.ToolHelp.PROCESSENTRY32 processEntry)
         {
-            this.Result = proc != null;
-            this.Proc = proc;
+            this.Result = result;
+            this.ProcessEntry = processEntry;
         }
 
         public byte[] Serialize()
@@ -22,9 +22,9 @@ namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
             br.Write((int)(this.Result ? 1 : 0));
             if (this.Result)
             {
-                br.Write((int)this.Proc?.dwPID);
-                br.Write((int)this.Proc?.szNameLong.Length);
-                br.Write(Encoding.UTF8.GetBytes(this.Proc?.szNameLong));
+                br.Write((int)ProcessEntry.th32ProcessID);
+                br.Write((int)ProcessEntry.szExeFile.Length);
+                br.Write(Encoding.UTF8.GetBytes(ProcessEntry.szExeFile));
             }
             else
             {

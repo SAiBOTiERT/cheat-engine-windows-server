@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+using CEServerWindows.CheatEnginePackets.S2C;
+using CEServerWindows.WindowsAPI;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -11,9 +12,11 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public UInt64 Address;
 
-        public override CommandType CommandType => CommandType.CMD_GETREGIONINFO;// throw new NotImplementedException();
+        public override CommandType CommandType => CommandType.CMD_GETREGIONINFO;
 
-        public GetRegionInfoCommand() { }
+        public GetRegionInfoCommand()
+        {
+        }
 
         public GetRegionInfoCommand(uint pid, UInt64 address) 
         {
@@ -31,7 +34,8 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override GetRegionInfoResponse Process()
         {
-            return new GetRegionInfoResponse(CEServerWindows.FPGA.instance.getVad(Pid, Address));
+            var mbi = CEServerWindows.FPGA.instance.getVad(Pid, Address);
+            return new GetRegionInfoResponse(mbi != null, mbi ?? new MemoryAPI.MEMORY_BASIC_INFORMATION());
         }
     }
 }

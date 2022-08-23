@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+using CEServerWindows.CheatEnginePackets.S2C;
+using CEServerWindows.WindowsAPI;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -10,9 +11,12 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
         public uint Pid;
         public UInt64 Address;
 
-        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEX;// throw new NotImplementedException();
+        public override CommandType CommandType => CommandType.CMD_VIRTUALQUERYEX;
 
-        public VirtualQueryExCommand() { }
+        public VirtualQueryExCommand()
+        {
+
+        }
 
         public VirtualQueryExCommand(uint pid, UInt64 address) 
         {
@@ -30,7 +34,8 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override VirtualQueryExResponse Process()
         {
-            return new VirtualQueryExResponse(CEServerWindows.FPGA.instance.getVad(Pid, Address));
+            var bmi = CEServerWindows.FPGA.instance.getVad(Pid, Address);
+            return new VirtualQueryExResponse(bmi != null, bmi ?? new MemoryAPI.MEMORY_BASIC_INFORMATION());
         }
     }
 }

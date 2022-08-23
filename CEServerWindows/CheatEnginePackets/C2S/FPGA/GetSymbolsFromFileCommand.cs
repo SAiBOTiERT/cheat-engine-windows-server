@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Text;
-using CEServerWindows.CheatEnginePackets.S2C.FPGA;
+using CEServerWindows.CheatEnginePackets.S2C;
 
 namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 {
@@ -8,9 +8,11 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
     {
 
         public string SymbolsFile;
-        public override CommandType CommandType => CommandType.CMD_GETSYMBOLLISTFROMFILE;// throw new NotImplementedException();
+        public override CommandType CommandType => CommandType.CMD_GETSYMBOLLISTFROMFILE;
 
-        public GetSymbolsFromFileCommand() { }
+        public GetSymbolsFromFileCommand()
+        {
+        }
 
         public GetSymbolsFromFileCommand(string path)
         {

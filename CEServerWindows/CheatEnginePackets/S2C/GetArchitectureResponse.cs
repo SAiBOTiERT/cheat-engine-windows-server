@@ -1,4 +1,4 @@
-﻿namespace CEServerWindows.CheatEnginePackets.S2C.WIN
+﻿namespace CEServerWindows.CheatEnginePackets.S2C
 {
     public class GetArchitectureResponse : ICheatEngineResponse
     {
