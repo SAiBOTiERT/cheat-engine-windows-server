@@ -26,4 +26,4 @@ Even though the official cheat engine server 'ports' a few of Windows API calls 
 Tested with:
 * [pcileech-fpga 4.10](https://github.com/ufrisk/pcileech-fpga/releases/tag/v4.10)
 * [MemProcFS 4.9](https://github.com/ufrisk/MemProcFS/releases/tag/v4.9)
-* [Cheat Engine 7.3](https://github.com/cheat-engine/cheat-engine/releases/tag/7.3)
+* [Cheat Engine 7.4](https://github.com/cheat-engine/cheat-engine/releases/tag/7.3)
