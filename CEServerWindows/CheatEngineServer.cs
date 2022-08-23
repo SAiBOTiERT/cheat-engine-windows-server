@@ -18,7 +18,7 @@ namespace CEServerWindows
         private bool _listening;
 #pragma warning restore CS0414
         private CancellationToken _token;
-        private Mode _mode = Mode.FPGA;
+        private Mode _mode = Mode.x64;
         public bool enableWPM = false;
         public static CheatEngineServer instance;
 
@@ -135,6 +135,7 @@ namespace CEServerWindows
                 this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.ReadProcessMemoryCommand());
                 this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.GetSymbolsFromFileCommand());
                 this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.GetRegionInfoCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.GetAbiCommand());
                 if(enableWPM) this.RegisterCommandHandler(new CheatEnginePackets.C2S.FPGA.WriteProcessMemoryCommand());
             }
             else if(_mode == Mode.x64)
@@ -153,6 +154,7 @@ namespace CEServerWindows
                 this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.ReadProcessMemoryCommand());
                 this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.GetSymbolsFromFileCommand());
                 this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.GetRegionInfoCommand());
+                this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.GetAbiCommand());
                 if(enableWPM) this.RegisterCommandHandler(new CheatEnginePackets.C2S.WIN.WriteProcessMemoryCommand());
             }
         }

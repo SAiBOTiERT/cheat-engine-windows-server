@@ -23,6 +23,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
             if (this.Result)
             {
                 br.Write((long)Module?.vaBase);
+                br.Write(0);
                 br.Write(Module?.cbImageSize ?? 0);
                 br.Write(Module?.wszText.Length ?? 0);
                 br.Write(Encoding.UTF8.GetBytes(Module?.wszText));
@@ -30,6 +31,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C.FPGA
             else 
             {
                 br.Write(0L);//Base Address
+                br.Write(0);//GlblcntUsage
                 br.Write(0);//Mod Size
                 br.Write(0);//str Size
             }

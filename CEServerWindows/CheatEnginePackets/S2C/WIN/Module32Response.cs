@@ -23,6 +23,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C.WIN
             if (this.Result)
             {
                 br.Write((long)ModuleEntry.modBaseAddr);
+                br.Write(ModuleEntry.GlblcntUsage);
                 br.Write(ModuleEntry.modBaseSize);
                 br.Write(ModuleEntry.szModule.Length);
                 br.Write(Encoding.UTF8.GetBytes(ModuleEntry.szModule));
@@ -30,6 +31,7 @@ namespace CEServerWindows.CheatEnginePackets.S2C.WIN
             else 
             {
                 br.Write(0L);//Base Address
+                br.Write(0);//GlblcntUsage
                 br.Write(0);//Mod Size
                 br.Write(0);//str Size
             }
