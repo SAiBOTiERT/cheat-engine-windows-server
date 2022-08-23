@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace CEServerWindows.CheatEnginePackets.S2C
 {
@@ -7,11 +8,13 @@ namespace CEServerWindows.CheatEnginePackets.S2C
     {
         public bool Result;
         public WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION MemoryBasicInformation;
+        public string ImageName;
         
-        public GetRegionInfoResponse(bool result, WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION mbi)
+        public GetRegionInfoResponse(bool result, WindowsAPI.MemoryAPI.MEMORY_BASIC_INFORMATION mbi, string imageName = "")
         {
             this.Result = result;
             this.MemoryBasicInformation = mbi;
+            this.ImageName = imageName;
         }
 
         public byte[] Serialize()
@@ -30,7 +33,8 @@ namespace CEServerWindows.CheatEnginePackets.S2C
             br.Write((int)MemoryBasicInformation.Type);
             br.Write((Int64)MemoryBasicInformation.BaseAddress);
             br.Write((Int64)MemoryBasicInformation.RegionSize);
-            br.Write((Byte)0);
+            br.Write((Byte)ImageName.Length);
+            br.Write(Encoding.UTF8.GetBytes(ImageName));
 
             br.Close();
             return ms.ToArray();

@@ -72,13 +72,13 @@ namespace CEServerWindows
             return pe32;
         }
 
-        public String? getImageByMBI(MemoryAPI.MEMORY_BASIC_INFORMATION mbi)
+        public string getImageByMBI(MemoryAPI.MEMORY_BASIC_INFORMATION mbi)
         {
             if (mbi.Type == MemoryAPI.TypeEnum.MEM_IMAGE && _vadImages.ContainsKey((UInt64)mbi.BaseAddress))
             {
                 return _vadImages[(UInt64)mbi.BaseAddress];
             }
-            return null;
+            return "";
         }
 
         private Dictionary<UInt64, MemoryAPI.MEMORY_BASIC_INFORMATION> transformVadsToMBIS(Vmm.MAP_VADENTRY[] vads)

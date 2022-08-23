@@ -34,7 +34,6 @@ namespace CEServerWindows
 
         public CheatEngineServer(PacketManager pm) : this(52736, pm)
         {
-
         }
 
         public CheatEngineServer(ushort port, PacketManager pm)

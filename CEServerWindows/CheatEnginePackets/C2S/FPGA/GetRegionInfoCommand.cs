@@ -34,8 +34,14 @@ namespace CEServerWindows.CheatEnginePackets.C2S.FPGA
 
         public override GetRegionInfoResponse Process()
         {
+            
             var mbi = CEServerWindows.FPGA.instance.getVad(Pid, Address);
-            return new GetRegionInfoResponse(mbi != null, mbi ?? new MemoryAPI.MEMORY_BASIC_INFORMATION());
+            var result = mbi != null;
+            if (!result)
+            {
+                mbi = new MemoryAPI.MEMORY_BASIC_INFORMATION();
+            }
+            return new GetRegionInfoResponse(result, (MemoryAPI.MEMORY_BASIC_INFORMATION)mbi!, CEServerWindows.FPGA.instance.getImageByMBI((MemoryAPI.MEMORY_BASIC_INFORMATION)mbi));
         }
     }
 }
